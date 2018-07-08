@@ -4,10 +4,12 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoUtil = require('./mongoConfig');
+const fileUpload = require('express-fileupload');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var membersRouter = require('./routes/members');
+var contentRouter = require('./routes/content');
 
 var app = express();
 
@@ -20,6 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(fileUpload());
 
 // https://enable-cors.org/server_expressjs.html
 app.use(function (req, res, next) {
@@ -32,6 +35,7 @@ mongoUtil.connectToServer( function( err ) {
   app.use('/', indexRouter);
   app.use('/users', usersRouter);
   app.use('/members', membersRouter);
+  app.use('/content', contentRouter);
 
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {
