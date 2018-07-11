@@ -14,7 +14,6 @@ router.get('/', function(req, res, next) {
   })
 });
 
-
 router.post('/', jsonParser, function (req, res) {
   const id = uuidv1();
   req.body.id = id;
