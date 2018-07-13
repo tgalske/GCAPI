@@ -7,7 +7,7 @@ var jsonParser = bodyParser.json({type: 'application/json'});
 let colName = 'content' // collection name
 
 router.get('/', function(req, res, next) {
-  let token = req.query.token;
+  // let token = req.query.token;
   mongoUtil.getDb().collection(colName).find().toArray(function (err, result) {
     if (err) throw err
     res.send(content = { content: result  })
