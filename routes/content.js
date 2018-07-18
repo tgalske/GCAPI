@@ -5,6 +5,24 @@ const uuidv1 = require('uuid/v1');
 var bodyParser = require('body-parser')
 var jsonParser = bodyParser.json({type: 'application/json'});
 let colName = 'content' // collection name
+var path = require('path')
+
+function isImage(fileType) {
+  switch (fileType) {
+    case ".jpg":
+      return true;
+    case ".png":
+      return true;
+    case ".gif":
+      return true;
+    case ".mov":
+      return false;
+    case ".mp4":
+      return false;
+    default:
+      return true;
+  }
+}
 
 router.get('/', function(req, res, next) {
   // let token = req.query.token;
@@ -16,12 +34,24 @@ router.get('/', function(req, res, next) {
 
 router.post('/', jsonParser, function (req, res) {
   let imageId = uuidv1();
-  req.body.imageId = imageId;
   let file = req.files.file;
-  var filePathWithName = './public/images/' + imageId + '.jpg'
-  file.mv(filePathWithName, function(err) {
+  let fileType = path.extname(file.name);
+  req.body.fileType = fileType;
+  req.body.imageId = imageId;
+  req.body.isImage = isImage(fileType);
+
+  var filePathWithNameWithType = './public/images/' + imageId + fileType
+  file.mv(filePathWithNameWithType, function(err) {
     if (err) { console.log(err) }
   })
+
+  /* If one tag is sent, it will be as a String (not array)
+     Create array, add tag to array */
+  if (!Array.isArray(req.body.tags)) {
+    let tags = [req.body.tags]
+    req.body.tags = tags
+  }
+
   mongoUtil.getDb().collection(colName).insertOne(req.body, function (err, res) {
     if (err) throw err;
   });
