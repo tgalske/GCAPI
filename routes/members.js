@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
   let token = req.query.token;
   mongoUtil.getDb().collection(colName).find().toArray(function (err, result) {
     if (err) throw err
-    res.send(members = { members: result  })
+    res.send( { members: result  } )
   })
 });
 
