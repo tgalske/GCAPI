@@ -1,17 +1,16 @@
-var express = require('express');
-var router = express.Router();
-var mongoUtil = require( '../mongoConfig' );
+let express = require('express');
+let router = express.Router();
+let mongoUtil = require( '../mongoConfig' );
 const uuidv1 = require('uuid/v1');
-var bodyParser = require('body-parser')
-var jsonParser = bodyParser.json({type: 'application/json'});
+let bodyParser = require('body-parser')
+let jsonParser = bodyParser.json({type: 'application/json'});
 let colName = 'content' // collection name
-var path = require('path')
-var Fuse = require('fuse.js'); // search
+let path = require('path')
+let Fuse = require('fuse.js'); // search
 const sharp = require('sharp'); // image manipulation
-var fs = require('fs');
-var zlib = require('zlib');
-var AWS = require('aws-sdk');
-var s3 = new AWS.S3();
+let fs = require('fs');
+let AWS = require('aws-sdk');
+let s3 = new AWS.S3();
 
 function isImage(fileType) {
   switch (fileType) {
@@ -75,6 +74,7 @@ router.post('/', jsonParser, function (req, res) {
 
   // Save file locally
   var filePathWithNameWithType = 'public/images/' + fileId + fileType
+
   file.mv(filePathWithNameWithType, function(err) {
     if (err) {
       console.log(err)
