@@ -1,6 +1,19 @@
-version: '3'
+version: "2.1"
+
 services:
-    node:
-        build: .
-        ports:
-        - "80:3000"
+  gcapi:
+    build: .
+    restart: always
+    networks:
+      - web
+    expose:
+      - "3000"
+    labels:
+      - "traefik.docker.network=web"
+      - "traefik.enable=true"
+      - "traefik.basic.frontend.rule=Host:ec2-52-86-165-88.compute-1.amazonaws.com"
+      - "traefik.basic.port=3000"
+      - "traefik.basic.protocol=http"
+networks:
+  web:
+    external: true
