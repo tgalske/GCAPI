@@ -2,10 +2,10 @@ let express = require('express');
 let router = express.Router();
 let mongoUtil = require( '../mongoConfig' );
 const uuidv1 = require('uuid/v1');
-let bodyParser = require('body-parser')
+let bodyParser = require('body-parser');
 let jsonParser = bodyParser.json({type: 'application/json'});
-let colName = 'content' // collection name
-let path = require('path')
+let colName = 'content'; // collection name
+let path = require('path');
 let Fuse = require('fuse.js'); // search
 const sharp = require('sharp'); // image manipulation
 let fs = require('fs');
@@ -31,21 +31,21 @@ function isImage(fileType) {
 
 router.get('/', function(req, res, next) {
   mongoUtil.getDb().collection(colName).find().toArray(function (err, content) {
-    if (err) throw err
-    res.send(content)
+    if (err) throw err;
+    res.send(content);
   });
 });
 
 router.get('/id/:fileId', function (req, res) {
   mongoUtil.getDb().collection(colName).findOne({fileId: req.params.fileId}, function (err, content) {
     if (err) throw err;
-    res.send(content)
+    res.send(content);
   })
 });
 
 router.get('/search', function(req, res) {
   let query = req.query.query;
-  var options = {
+  let options = {
     shouldSort: true,
     threshold: 0.5,
     location: 0,
@@ -73,49 +73,51 @@ router.post('/', jsonParser, function (req, res) {
   req.body.isImage = isImage(fileType);
 
   // Save file locally
-  var filePathWithNameWithType = 'public/images/' + fileId + fileType
+  let filePathWithNameWithType = 'public/' + fileId + fileType;
 
   file.mv(filePathWithNameWithType, function(err) {
     if (err) {
       console.log(err)
     } else {
       // Upload file to s3
-      var bucketName = "s3-gc-media"
-      var fileStream = fs.createReadStream(filePathWithNameWithType);
+      let bucketName = "s3-gc-media";
+      let fileStream = fs.createReadStream(filePathWithNameWithType);
       fileStream.on('error', function(err) {
         console.log('File Error', err);
       });
 
       let contentType = (req.body.isImage) ? 'image/' + fileType.substring(1, fileType.length) : 'video/' + fileType.substring(1, fileType.length)
 
-      var uploadParams = {
+      let uploadParams = {
         Bucket: bucketName,
         Key: fileId + fileType,
         Body: fileStream,
         ContentType: contentType
       };
-      // Upload file to S3 bucket
+      // Upload file to S3
       s3.upload(uploadParams, function (err, data) {
         if (err) {
           console.log("Error", err);
+        } else {
+          /* On S3 upload success, insert metadata to DB */
+          /* If one tag is sent, it will be as a String (not array)
+             So, create an array and add tag to array */
+          if (!Array.isArray(req.body.tags)) {
+              let tags = [req.body.tags];
+              req.body.tags = tags;
+          }
+          mongoUtil.getDb().collection(colName).insertOne(req.body, function (err, res) {
+              if (err) throw err;
+          });
         }
+        // delete local file on success and on failure
+        fs.unlink(filePathWithNameWithType, (err) => {
+            if (err) throw err;
+        });
       });
     }
-  })
-
-
-
-  /* If one tag is sent, it will be as a String (not array)
-  So, create an array and add tag to array */
-  if (!Array.isArray(req.body.tags)) {
-    let tags = [req.body.tags]
-    req.body.tags = tags
-  }
-
-  mongoUtil.getDb().collection(colName).insertOne(req.body, function (err, res) {
-    if (err) throw err;
   });
-  console.log(fileId)
+  // TODO: Ensure there is always a response (not empty response)
   res.redirect('content/id/' + req.body.fileId);
 });
 
