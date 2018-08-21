@@ -103,8 +103,7 @@ router.post('/', jsonParser, function (req, res) {
           /* If one tag is sent, it will be as a String (not array)
              So, create an array and add tag to array */
           if (!Array.isArray(req.body.tags)) {
-              let tags = [req.body.tags];
-              req.body.tags = tags;
+              req.body.tags = [];
           }
           mongoUtil.getDb().collection(colName).insertOne(req.body, function (err, res) {
               if (err) throw err;
@@ -117,8 +116,7 @@ router.post('/', jsonParser, function (req, res) {
       });
     }
   });
-  // TODO: Ensure there is always a response (not empty response)
-  res.redirect('content/id/' + req.body.fileId);
+  res.send(req.body)
 });
 
 module.exports = router;
