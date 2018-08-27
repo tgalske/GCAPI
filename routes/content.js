@@ -1,7 +1,6 @@
 let express = require('express');
 let router = express.Router();
 let mongoUtil = require( '../mongoConfig' );
-const uuidv1 = require('uuid/v1');
 let bodyParser = require('body-parser');
 let jsonParser = bodyParser.json({type: 'application/json'});
 let colName = 'content'; // collection name
@@ -58,14 +57,14 @@ router.get('/search', function(req, res) {
     ]
   };
   mongoUtil.getDb().collection(colName).find().toArray(function (err, result) {
-    if (err) throw err
+    if (err) throw err;
     var fuse = new Fuse(result, options);
     res.send(fuse.search(query));
   })
 });
 
 router.post('/', jsonParser, function (req, res) {
-  let fileId = req.body.fileId
+  let fileId = req.body.fileId;
   let file = req.files.file;
   let fileType = path.extname(file.name);
   req.body.fileType = fileType;
@@ -86,7 +85,7 @@ router.post('/', jsonParser, function (req, res) {
         console.log('File Error', err);
       });
 
-      let contentType = (req.body.isImage) ? 'image/' + fileType.substring(1, fileType.length) : 'video/' + fileType.substring(1, fileType.length)
+      let contentType = (req.body.isImage) ? 'image/' + fileType.substring(1, fileType.length) : 'video/' + fileType.substring(1, fileType.length);
 
       let uploadParams = {
         Bucket: bucketName,

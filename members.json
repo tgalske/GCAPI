@@ -1,229 +1,233 @@
 {
-  "id":"18d7a129-067b-4b68-8f59-afab19e696aa",
-  "fistname":"Patxi",
-  "lastname":"Astiasaran",
-  "phone":"8609974411",
-  "college": {
-    "name":"University of Connecticut",
-    "city":"Storrs",
-    "state":"Connecticut",
-    "color":"college_02254B"
-  }
-}
-{
-  "id":"b49e61d5-6b94-418c-a789-a657943763d6",
-  "firstname":"Jack",
-  "lastname":"Brockelman",
-  "phone":"",
-  "college": {
-    "name":"University of New Hampshire",
-    "city":"Durham",
-    "state":"New Hampshire",
-    "color":"college_003591"
-  }
-}
-{
-  "id":"e2535eb5-afa2-4c82-a5fd-d20e3a9d0274",
-  "firstname":"Jeff",
-  "lastname":"Crook",
-  "phone":"",
-  "college": {
-    "name":"University of Connecticut",
-    "city":"Storrs",
-    "state":"Connecticut",
-    "color":"college_02254B"
-  }
-}
-{
-  "id":"27f0a016-1f1b-424c-9af3-21ec58115e86",
-  "firstname":"Peter",
-  "lastname":"Dunst",
-  "phone":"",
-  "college": {
-    "name":"James Madison University",
-    "city":"Harrisonburg",
-    "state":"Virginia",
-    "color":"college_450084"
-  }
-}
-
-{
-  "id":"165bc102-e21d-4e60-9d3f-607b526cdca1",
-  "firstname":"Michael",
-  "lastname":"Feinberg",
-  "phone":"",
-  "college": {
-    "name":"Syracuse University",
-    "city":"Syracuse",
-    "state":"New York",
-    "color":"college_D44500"
-  }
-}
-{
-  "id":"c9daa647-de93-488c-9734-6346991faf28",
-  "firstname":"Derek",
-  "lastname":"Fern",
-  "phone":"8608333997",
-  "college": {
-    "name":"Pennsylvania State University",
-    "city":"State College",
-    "state":"Pennsylvania",
-    "color":"college_002D62"
-  }
-}
-{
-  "id":"30ed2083-c0c7-4701-a8ec-9cf3aab6eab9",
-  "firstname":"Brian",
-  "lastname":"Fox",
-  "phone":"",
-  "college": {
-    "name":"Belmont University",
-    "city":"Nashville",
-    "state":"Tennessee",
-    "color":"college_05286C"
-  }
-}
-{
-  "id":"c6da3840-7a81-11e8-93f4-c33b552a5d3e",
-  "firstname":"Tyler",
-  "lastname":"Galske",
-  "phone":"8608747615",
-  "college": {
-    "name":"Marist College",
-    "city":"Poughkeepsie",
-    "state":"New York",
-    "color":"college_DB0030"
-  }
-}
-{
-  "id":"937c324f-a51f-49c5-a465-57dbcef3224f",
-  "firstname":"Joey",
-  "lastname":"Harrell",
-  "phone":"",
-  "college": {
-    "name":"James Madison University",
-    "city":"Harrisonburg",
-    "state":"Virginia",
-    "color":"college_450084"
-  }
-}
-{
-  "id":"5288d200-7b3d-11e8-808c-2f449aba3979",
-  "firstname":"Alex",
-  "lastname":"James",
-  "phone":"8606703209",
-  "college": {
-    "name":"Florida Institute of Technology",
-    "city":"Melbourne",
-    "state":"Florida",
-    "color":"college_900028"
-  }
-}
-{
-  "id":"78c64390-823f-11e8-bb0c-d337f5233eb4",
-  "firstname":"Vinit",
-  "lastname":"Patel",
-  "phone":"8607076755",
-  "college": {
-    "name":"University of Connecticut",
-    "city":"Storrs",
-    "state":"Connecticut",
-    "color":"college_02254B"
-  }
-}
-{
-  "id":"c4dd2768-43c2-4058-acc0-f00c306ad691",
-  "firstname":"Bob",
-  "lastname":"Raus",
-  "phone":"8602565450",
-  "college": {
-    "name":"Bentley University",
-    "city":"Waltham",
-    "state":"Massachusetts",
-    "color":"college_09A6F0"
-  }
-}
-{
-  "id":"b4c11d0b-d3aa-4ae9-b935-1686bc615781",
-  "firstname":"Kyle",
-  "lastname":"Sopelak",
-  "phone":"",
-  "college": {
-    "name":"James Madison University",
-    "city":"Harrisonburg",
-    "state":"Virginia",
-    "color":"college_450084"
-  }
-}
-{
-  "id":"4bdd7f7c-18fa-4ddc-b0ba-064938cd0276",
-  "firstname":"Andrew",
-  "lastname":"Steele",
-  "phone":"",
-  "college": {
-    "name":"University of Maryland",
-    "city":"College Park",
-    "state":"Maryland",
-    "color":"college_CF102D"
-  }
-}
-{
-  "id":"27b914f8-7917-452e-a741-fb9b53729f0b",
-  "fistname":"Mark",
-  "lastname":"Steele",
-  "phone":"8605087664",
-  "college": {
-    "name":"Bentley University",
-    "city":"Waltham",
-    "state":"Massachusetts",
-    "color":"college_09A6F0"
-  }
-}
-{
-  "id":"c6da3841-7a81-11e8-93f4-c33b552a5d3e",
-  "firstname":"Andrew",
-  "lastname":"Taylor",
-  "phone":"8606813447",
-  "college": {
-    "name":"High Point University",
-    "city":"High Point",
-    "state":"North Carolina",
-    "color":"college_330072"
-  }
-}
-{
-  "id":"3c4a1b28-d9c9-4c09-9686-6bb787e2e1cb",
-  "firstname":"Christian",
-  "lastname":"Thomas",
-  "phone":"",
-  "college": {
-    "name":"Southern Connecticut State University",
-    "city":"New Haven",
-    "state":"Connecticut",
-    "color":"college_08549B"
-  }
-}
-{
-  "id":"1fc28294-e991-484f-8570-fe0d820ef066",
-  "firstname":"Connor",
-  "lastname":"Welsh",
-  "phone":"8604908646",
-  "college": {
-    "name":"Boston University",
-    "city":"Boston",
-    "state":"Massachusetts",
-    "color":"college_CC0000"
-  }
-}
-{
-  "id":"1105d0e5-d1b3-44e3-ad5e-b03c246ebc88",
-  "firstname":"Austin",
-  "lastname":"Zhu",
-  "phone":"",
-  "college": {
-    "name":"University of Pennsylvania",
-    "city":"Philadelphia",
-    "state":"Pennsylvania:",
-    "color":"college_CC0000"
-  }
+  "members":
+  [
+    {
+      "id":"18d7a129-067b-4b68-8f59-afab19e696aa",
+      "firstname":"Patxi",
+      "lastname":"Astiasaran",
+      "phone":"8609974411",
+      "college": {
+        "name":"University of Connecticut",
+        "city":"Storrs",
+        "state":"Connecticut",
+        "color":"college_02254B"
+      }
+    },
+    {
+      "id":"b49e61d5-6b94-418c-a789-a657943763d6",
+      "firstname":"Jack",
+      "lastname":"Brockelman",
+      "phone":"8608034963",
+      "college": {
+        "name":"University of New Hampshire",
+        "city":"Durham",
+        "state":"New Hampshire",
+        "color":"college_003591"
+      }
+    },
+    {
+      "id":"e2535eb5-afa2-4c82-a5fd-d20e3a9d0274",
+      "firstname":"Jeff",
+      "lastname":"Crook",
+      "phone":"8608160513",
+      "college": {
+        "name":"University of Connecticut",
+        "city":"Storrs",
+        "state":"Connecticut",
+        "color":"college_02254B"
+      }
+    },
+    {
+      "id":"27f0a016-1f1b-424c-9af3-21ec58115e86",
+      "firstname":"Peter",
+      "lastname":"Dunst",
+      "phone":"8609303575",
+      "college": {
+        "name":"James Madison University",
+        "city":"Harrisonburg",
+        "state":"Virginia",
+        "color":"college_450084"
+      }
+    },
+    {
+      "id":"165bc102-e21d-4e60-9d3f-607b526cdca1",
+      "firstname":"Michael",
+      "lastname":"Feinberg",
+      "phone":"8608399350",
+      "college": {
+        "name":"Syracuse University",
+        "city":"Syracuse",
+        "state":"New York",
+        "color":"college_D44500"
+      }
+    },
+    {
+      "id":"c9daa647-de93-488c-9734-6346991faf28",
+      "firstname":"Derek",
+      "lastname":"Fern",
+      "phone":"8608333997",
+      "college": {
+        "name":"Pennsylvania State University",
+        "city":"State College",
+        "state":"Pennsylvania",
+        "color":"college_002D62"
+      }
+    },
+    {
+      "id":"30ed2083-c0c7-4701-a8ec-9cf3aab6eab9",
+      "firstname":"Brian",
+      "lastname":"Fox",
+      "phone":"8604368201",
+      "college": {
+        "name":"Belmont University",
+        "city":"Nashville",
+        "state":"Tennessee",
+        "color":"college_05286C"
+      }
+    },
+    {
+      "id":"c6da3840-7a81-11e8-93f4-c33b552a5d3e",
+      "firstname":"Tyler",
+      "lastname":"Galske",
+      "phone":"8608747615",
+      "college": {
+        "name":"Marist College",
+        "city":"Poughkeepsie",
+        "state":"New York",
+        "color":"college_DB0030"
+      }
+    },
+    {
+      "id":"937c324f-a51f-49c5-a465-57dbcef3224f",
+      "firstname":"Joey",
+      "lastname":"Harrell",
+      "phone":"8603844065",
+      "college": {
+        "name":"James Madison University",
+        "city":"Harrisonburg",
+        "state":"Virginia",
+        "color":"college_450084"
+      }
+    },
+    {
+      "id":"5288d200-7b3d-11e8-808c-2f449aba3979",
+      "firstname":"Alex",
+      "lastname":"James",
+      "phone":"8606703209",
+      "college": {
+        "name":"Florida Institute of Technology",
+        "city":"Melbourne",
+        "state":"Florida",
+        "color":"college_900028"
+      }
+    },
+    {
+      "id":"78c64390-823f-11e8-bb0c-d337f5233eb4",
+      "firstname":"Vinit",
+      "lastname":"Patel",
+      "phone":"8607076755",
+      "college": {
+        "name":"University of Connecticut",
+        "city":"Storrs",
+        "state":"Connecticut",
+        "color":"college_02254B"
+      }
+    },
+    {
+      "id":"c4dd2768-43c2-4058-acc0-f00c306ad691",
+      "firstname":"Bob",
+      "lastname":"Raus",
+      "phone":"8602565450",
+      "college": {
+        "name":"Bentley University",
+        "city":"Waltham",
+        "state":"Massachusetts",
+        "color":"college_09A6F0"
+      }
+    },
+    {
+      "id":"b4c11d0b-d3aa-4ae9-b935-1686bc615781",
+      "firstname":"Kyle",
+      "lastname":"Sopelak",
+      "phone":"8604907536",
+      "college": {
+        "name":"James Madison University",
+        "city":"Harrisonburg",
+        "state":"Virginia",
+        "color":"college_450084"
+      }
+    },
+    {
+      "id":"4bdd7f7c-18fa-4ddc-b0ba-064938cd0276",
+      "firstname":"Andrew",
+      "lastname":"Steele",
+      "phone":"8605083827",
+      "college": {
+        "name":"University of Maryland",
+        "city":"College Park",
+        "state":"Maryland",
+        "color":"college_CF102D"
+      }
+    },
+    {
+      "id":"27b914f8-7917-452e-a741-fb9b53729f0b",
+      "firstname":"Mark",
+      "lastname":"Steele",
+      "phone":"8605087664",
+      "college": {
+        "name":"Bentley University",
+        "city":"Waltham",
+        "state":"Massachusetts",
+        "color":"college_09A6F0"
+      }
+    },
+    {
+      "id":"c6da3841-7a81-11e8-93f4-c33b552a5d3e",
+      "firstname":"Andrew",
+      "lastname":"Taylor",
+      "phone":"8606813447",
+      "college": {
+        "name":"High Point University",
+        "city":"High Point",
+        "state":"North Carolina",
+        "color":"college_330072"
+      }
+    },
+    {
+      "id":"3c4a1b28-d9c9-4c09-9686-6bb787e2e1cb",
+      "firstname":"Christian",
+      "lastname":"Thomas",
+      "phone":"8607518131",
+      "college": {
+        "name":"Southern Connecticut State University",
+        "city":"New Haven",
+        "state":"Connecticut",
+        "color":"college_08549B"
+      }
+    },
+    {
+      "id":"1fc28294-e991-484f-8570-fe0d820ef066",
+      "firstname":"Connor",
+      "lastname":"Welsh",
+      "phone":"8604908646",
+      "college": {
+        "name":"Boston University",
+        "city":"Boston",
+        "state":"Massachusetts",
+        "color":"college_CC0000"
+      }
+    },
+    {
+      "id":"1105d0e5-d1b3-44e3-ad5e-b03c246ebc88",
+      "firstname":"Austin",
+      "lastname":"Zhu",
+      "phone":"8603722899",
+      "college": {
+        "name":"University of Pennsylvania",
+        "city":"Philadelphia",
+        "state":"Pennsylvania:",
+        "color":"college_CC0000"
+      }
+    }
+  ]
 }

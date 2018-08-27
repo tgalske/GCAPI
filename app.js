@@ -10,6 +10,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var membersRouter = require('./routes/members');
 var contentRouter = require('./routes/content');
+var quotesRouter = require('./routes/quotes');
 
 var app = express();
 
@@ -37,6 +38,7 @@ mongoUtil.connectToServer( function( err ) {
   app.use('/users', usersRouter);
   app.use('/members', membersRouter);
   app.use('/content', contentRouter);
+  app.use('/quotes', quotesRouter);
 
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {
