@@ -31,10 +31,6 @@ router.get('/id/:id', function (req, res) {
 
 // update one quote based on its ID
 router.put('/id/:id', function (req, res) {
-  if (!req.params.id) {
-    res.send({error: req.app.locals.bootstrapConfigs.ERR_MISSING_FIELDS});
-    return;
-  }
   const query = { id: req.params.id };
   const newQuote = { $set: { quote: req.body.quote } };
   mongoUtil.getDb().collection(req.app.locals.bootstrapConfigs.QUOTES_COLLECTION_NAME).updateOne(query, newQuote, ((err, result) => {
@@ -45,10 +41,6 @@ router.put('/id/:id', function (req, res) {
 
 // sets the quote to not visible (fake-deconste)
 router.put('/id/hide/:id', function (req, res) {
-  if (!req.params.id) {
-    res.send({error: req.app.locals.bootstrapConfigs.ERR_MISSING_FIELDS});
-    return;
-  }
   const query = { id: req.params.id };
   const setNotVisible = { $set: { isVisible: false } };
   mongoUtil.getDb().collection(req.app.locals.bootstrapConfigs.QUOTES_COLLECTION_NAME).updateOne(query, setNotVisible, ((err, result) => {
@@ -59,7 +51,7 @@ router.put('/id/hide/:id', function (req, res) {
 
 
 router.post('/', jsonParser, function (req, res) {
-  if (!req.params.id || !req.params.memberId || !req.params.quote) {
+  if (!req.body.id || !req.body.memberId || !req.body.quote) {
     res.send({error: req.app.locals.bootstrapConfigs.ERR_MISSING_FIELDS});
     return;
   }
