@@ -1,23 +1,33 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var mongoUtil = require('./mongoConfig');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const mongoUtil = require('./mongoConfig');
 const fileUpload = require('express-fileupload');
+const axios = require('axios');
+const fs = require('fs');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var membersRouter = require('./routes/members');
-var contentRouter = require('./routes/content');
-var quotesRouter = require('./routes/quotes');
+// fetch bootstrap configs
+axios.get('https://s3.amazonaws.com/s3-gc-configs/backend-configs.json').then( (response) => {
+  app.locals.bootstrapConfigs = response.data;
+}).catch( (error) => {
+  console.log("Failed to load remote bootstrap configurations. Fetching local bootstrap configurations.");
+  fs.readFile('local_configs/backend-configs-0.1.json', 'utf8', function (err, data) {
+    app.locals.bootstrapConfigs = data;
+  });
+});
 
-var app = express();
+const indexRouter = require('./routes/index');
+const membersRouter = require('./routes/members');
+const contentRouter = require('./routes/content');
+const quotesRouter = require('./routes/quotes');
+
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-app.set('etag', false); // turn off, see 200 vs 304 response
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -30,12 +40,12 @@ app.use(fileUpload());
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   next();
 });
 
 mongoUtil.connectToServer( function( err ) {
   app.use('/', indexRouter);
-  app.use('/users', usersRouter);
   app.use('/members', membersRouter);
   app.use('/content', contentRouter);
   app.use('/quotes', quotesRouter);

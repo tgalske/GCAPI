@@ -1,0 +1,7 @@
+{
+  "ERR_MISSING_FIELDS": "Error: Missing required field(s)",
+  "MEMBERS_COLLECTION_NAME": "members",
+  "QUOTES_COLLECTION_NAME": "quotes",
+  "CONTENT_COLLECTION_NAME": "content",
+  "S3_CONTENT_BUCKET_NAME": "s3-gc-media"
+}

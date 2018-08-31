@@ -1,43 +1,69 @@
-let express = require('express');
-let router = express.Router();
-let mongoUtil = require( '../mongoConfig' );
+const express = require('express');
+const router = express.Router();
+const mongoUtil = require( '../mongoConfig' );
 const uuidv1 = require('uuid/v1');
-let bodyParser = require('body-parser');
-let jsonParser = bodyParser.json({type: 'application/json'});
-let colName = 'quotes' // collection name
+const bodyParser = require('body-parser');
+const jsonParser = bodyParser.json({type: 'application/json'});
 
-router.get('/', function(req, res, next) {
-  let token = req.query.token;
-  mongoUtil.getDb().collection(colName).find().toArray(function (err, result) {
+// get all quotes from newest to oldest
+router.get('/', function(req, res) {
+  mongoUtil.getDb().collection(req.app.locals.bootstrapConfigs.QUOTES_COLLECTION_NAME).find().sort({ _id: -1 }).toArray((err, result) => {
     if (err) throw err;
-    res.send( { result  } );
+    res.send(result);
   });
 });
 
-router.get('/:memberId', function (req, res) {
-  mongoUtil.getDb().collection(colName).find({memberId: req.params.memberId }).project({quote: 1, _id: 0}).sort( { _id: -1 } ).toArray(function (err, result) {
+// get all quotes and quote IDs from a member where isVisible is true
+router.get('/member/:memberId', function (req, res) {
+  mongoUtil.getDb().collection(req.app.locals.bootstrapConfigs.QUOTES_COLLECTION_NAME).find({memberId: req.params.memberId, isVisible: true }).sort( { _id: -1 } ).toArray((err, result) => {
     if (err) throw err;
-    var quotes = [];
-    for (var i = 0; i < result.length; i++) {
-      quotes[i] = result[i].quote;
-    }
-    result = {
-      memberId: req.params.memberId,
-      quotes: quotes
-    };
-    res.send(result)
+    res.send(result);
   })
 });
 
-// router.get('/:memberId/:id', function (req, res) {
-//   mongoUtil.getDb().collection(colName).findOne({memberId: req.params.memberId}, function (err, result) {
-//     if (err) throw err;
-//     res.send(result)
-//   })
-// });
+// get one quote based on its ID
+router.get('/id/:id', function (req, res) {
+  mongoUtil.getDb().collection(req.app.locals.bootstrapConfigs.QUOTES_COLLECTION_NAME).findOne({id: req.params.id }, ((err, result) => {
+    if (err) throw err;
+    res.send(result);
+  }));
+});
+
+// update one quote based on its ID
+router.put('/id/:id', function (req, res) {
+  if (!req.params.id) {
+    res.send({error: req.app.locals.bootstrapConfigs.ERR_MISSING_FIELDS});
+    return;
+  }
+  const query = { id: req.params.id };
+  const newQuote = { $set: { quote: req.body.quote } };
+  mongoUtil.getDb().collection(req.app.locals.bootstrapConfigs.QUOTES_COLLECTION_NAME).updateOne(query, newQuote, ((err, result) => {
+    if (err) throw err;
+    res.send(result);
+  }));
+});
+
+// sets the quote to not visible (fake-deconste)
+router.put('/id/hide/:id', function (req, res) {
+  if (!req.params.id) {
+    res.send({error: req.app.locals.bootstrapConfigs.ERR_MISSING_FIELDS});
+    return;
+  }
+  const query = { id: req.params.id };
+  const setNotVisible = { $set: { isVisible: false } };
+  mongoUtil.getDb().collection(req.app.locals.bootstrapConfigs.QUOTES_COLLECTION_NAME).updateOne(query, setNotVisible, ((err, result) => {
+    if (err) throw err;
+    res.send(result);
+  }));
+});
+
 
 router.post('/', jsonParser, function (req, res) {
-  mongoUtil.getDb().collection(colName).insertOne(req.body, function (err) {
+  if (!req.params.id || !req.params.memberId || !req.params.quote) {
+    res.send({error: req.app.locals.bootstrapConfigs.ERR_MISSING_FIELDS});
+    return;
+  }
+  mongoUtil.getDb().collection(req.app.locals.bootstrapConfigs.QUOTES_COLLECTION_NAME).insertOne(req.body, function (err) {
     if (err) throw err;
   });
   res.send(req.body);

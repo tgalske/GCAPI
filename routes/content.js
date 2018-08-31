@@ -3,10 +3,8 @@ let router = express.Router();
 let mongoUtil = require( '../mongoConfig' );
 let bodyParser = require('body-parser');
 let jsonParser = bodyParser.json({type: 'application/json'});
-let colName = 'content'; // collection name
 let path = require('path');
 let Fuse = require('fuse.js'); // search
-const sharp = require('sharp'); // image manipulation
 let fs = require('fs');
 let AWS = require('aws-sdk');
 let s3 = new AWS.S3();
@@ -28,20 +26,23 @@ function isImage(fileType) {
   }
 }
 
+// get all content
 router.get('/', function(req, res, next) {
-  mongoUtil.getDb().collection(colName).find().toArray(function (err, content) {
+  mongoUtil.getDb().collection(req.app.locals.bootstrapConfigs.CONTENT_COLLECTION_NAME).find().sort( { _id: -1 }).toArray(function (err, content) {
     if (err) throw err;
     res.send(content);
   });
 });
 
+// get one item based on its ID
 router.get('/id/:fileId', function (req, res) {
-  mongoUtil.getDb().collection(colName).findOne({fileId: req.params.fileId}, function (err, content) {
+  mongoUtil.getDb().collection(req.app.locals.bootstrapConfigs.CONTENT_COLLECTION_NAME).findOne({fileId: req.params.fileId}, function (err, content) {
     if (err) throw err;
     res.send(content);
   })
 });
 
+// get 0 or many items based on search query
 router.get('/search', function(req, res) {
   let query = req.query.query;
   let options = {
@@ -56,7 +57,7 @@ router.get('/search', function(req, res) {
       "tags"
     ]
   };
-  mongoUtil.getDb().collection(colName).find().toArray(function (err, result) {
+  mongoUtil.getDb().collection(req.app.locals.bootstrapConfigs.CONTENT_COLLECTION_NAME).find().toArray(function (err, result) {
     if (err) throw err;
     var fuse = new Fuse(result, options);
     res.send(fuse.search(query));
@@ -64,22 +65,24 @@ router.get('/search', function(req, res) {
 });
 
 router.post('/', jsonParser, function (req, res) {
+  if (!req.body.fileId || !req.files.file || !req.body.title) {
+    res.send({error: req.app.locals.bootstrapConfigs.ERR_MISSING_FIELDS});
+    return;
+  }
   let fileId = req.body.fileId;
   let file = req.files.file;
   let fileType = path.extname(file.name);
   req.body.fileType = fileType;
-  req.body.fileId = fileId;
   req.body.isImage = isImage(fileType);
 
   // Save file locally
   let filePathWithNameWithType = 'public/' + fileId + fileType;
-
   file.mv(filePathWithNameWithType, function(err) {
     if (err) {
       console.log(err)
     } else {
       // Upload file to s3
-      let bucketName = "s3-gc-media";
+      let bucketName = req.app.locals.bootstrapConfigs.S3_CONTENT_BUCKET_NAME;
       let fileStream = fs.createReadStream(filePathWithNameWithType);
       fileStream.on('error', function(err) {
         console.log('File Error', err);
@@ -104,7 +107,7 @@ router.post('/', jsonParser, function (req, res) {
           if (!Array.isArray(req.body.tags)) {
               req.body.tags = [];
           }
-          mongoUtil.getDb().collection(colName).insertOne(req.body, function (err, res) {
+          mongoUtil.getDb().collection(req.app.locals.bootstrapConfigs.CONTENT_COLLECTION_NAME).insertOne(req.body, function (err, res) {
               if (err) throw err;
           });
         }
