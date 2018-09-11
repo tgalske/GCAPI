@@ -35,12 +35,12 @@ router.get('/', function (req, res, next) {
 });
 
 // get one item based on its ID
-router.get('/id/:fileId', function (req, res) {
-  mongoUtil.getDb().collection(req.app.locals.bootstrapConfigs.CONTENT_COLLECTION_NAME).findOne({fileId: req.params.fileId}, function (err, content) {
-    if (err) throw err;
-    res.send(content);
-  })
-});
+// router.get('/id/:fileId', function (req, res) {
+//   mongoUtil.getDb().collection(req.app.locals.bootstrapConfigs.CONTENT_COLLECTION_NAME).findOne({fileId: req.params.fileId}, function (err, content) {
+//     if (err) throw err;
+//     res.send(content);
+//   })
+// });
 
 // get 0 or many items based on search query
 router.get('/search', function (req, res) {
@@ -80,7 +80,7 @@ router.post('/', jsonParser, function (req, res) {
   let filePathWithNameWithType = 'public/' + fileId + fileType;
   file.mv(filePathWithNameWithType, function (err) {
     if (err) {
-      console.log(err)
+      console.log("Error saving file to local storage: " + err);
     } else {
       // Upload file to s3
       let bucketName = req.app.locals.bootstrapConfigs.S3_CONTENT_BUCKET_NAME;
