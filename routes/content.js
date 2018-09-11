@@ -6,8 +6,6 @@ let jsonParser = bodyParser.json({type: 'application/json'});
 let path = require('path');
 let Fuse = require('fuse.js'); // search
 let fs = require('fs');
-let AWS = require('aws-sdk');
-let s3 = new AWS.S3();
 
 function isImage(fileType) {
   switch (fileType) {
@@ -69,6 +67,9 @@ router.post('/', jsonParser, function (req, res) {
     res.send({error: req.app.locals.bootstrapConfigs.ERR_MISSING_FIELDS});
     return;
   }
+
+  let AWS = require('aws-sdk');
+  let s3 = new AWS.S3();
   let fileId = req.body.fileId;
   let file = req.files.file;
   let fileType = path.extname(file.name);
@@ -86,7 +87,7 @@ router.post('/', jsonParser, function (req, res) {
       let bucketName = req.app.locals.bootstrapConfigs.S3_CONTENT_BUCKET_NAME;
       let fileStream = fs.createReadStream(filePathWithNameWithType);
       fileStream.on('error', function (err) {
-        console.log('File Error', err);
+        console.log('File streaming error: ', err);
       });
 
       let contentType = (req.body.isImage) ? 'image/' + fileType.substring(1, fileType.length) : 'video/' + fileType.substring(1, fileType.length);
@@ -100,7 +101,8 @@ router.post('/', jsonParser, function (req, res) {
       // Upload file to S3
       s3.upload(uploadParams, function (err, data) {
         if (err) {
-          console.log("Error", err);
+          console.log("Error uploading to AWS S3: ", err);
+          console.log("Upload parameters", uploadParams);
         } else {
           /* On S3 upload success, insert metadata to DB */
           /* If one tag is sent, it will be as a String (not array)
