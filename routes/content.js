@@ -35,12 +35,12 @@ router.get('/', function (req, res, next) {
 });
 
 // get one item based on its ID
-// router.get('/id/:fileId', function (req, res) {
-//   mongoUtil.getDb().collection(req.app.locals.bootstrapConfigs.CONTENT_COLLECTION_NAME).findOne({fileId: req.params.fileId}, function (err, content) {
-//     if (err) throw err;
-//     res.send(content);
-//   })
-// });
+router.get('/id/:fileId', function (req, res) {
+  mongoUtil.getDb().collection(req.app.locals.bootstrapConfigs.CONTENT_COLLECTION_NAME).findOne({fileId: req.params.fileId}, function (err, content) {
+    if (err) throw err;
+    res.send(content);
+  })
+});
 
 // get 0 or many items based on search query
 router.get('/search', function (req, res) {
