@@ -16,6 +16,9 @@ services:
       - "traefik.backend=gcapi"
       - "traefik.port=3000"
       - "traefik.protocol=http"
+    env_file:
+      - AWS_ACCESS_KEY_ID=AKIAJGTKZ4JK7GNAS75Q
+      -AWS_SECRET_ACCESS_KEY=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
 networks:
   web:
     external: true
