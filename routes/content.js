@@ -1,6 +1,6 @@
 let express = require('express');
 let router = express.Router();
-let mongoUtil = require( '../mongoConfig' );
+let mongoUtil = require('../mongoConfig');
 let bodyParser = require('body-parser');
 let jsonParser = bodyParser.json({type: 'application/json'});
 let path = require('path');
@@ -12,23 +12,23 @@ let s3 = new AWS.S3();
 function isImage(fileType) {
   switch (fileType) {
     case ".jpg":
-    return true;
+      return true;
     case ".png":
-    return true;
+      return true;
     case ".gif":
-    return true;
+      return true;
     case ".mov":
-    return false;
+      return false;
     case ".mp4":
-    return false;
+      return false;
     default:
-    return true;
+      return true;
   }
 }
 
 // get all content
-router.get('/', function(req, res, next) {
-  mongoUtil.getDb().collection(req.app.locals.bootstrapConfigs.CONTENT_COLLECTION_NAME).find().sort( { _id: -1 }).toArray(function (err, content) {
+router.get('/', function (req, res, next) {
+  mongoUtil.getDb().collection(req.app.locals.bootstrapConfigs.CONTENT_COLLECTION_NAME).find().sort({_id: -1}).toArray(function (err, content) {
     if (err) throw err;
     res.send(content);
   });
@@ -43,7 +43,7 @@ router.get('/id/:fileId', function (req, res) {
 });
 
 // get 0 or many items based on search query
-router.get('/search', function(req, res) {
+router.get('/search', function (req, res) {
   let query = req.query.query;
   let options = {
     shouldSort: true,
@@ -74,17 +74,18 @@ router.post('/', jsonParser, function (req, res) {
   let fileType = path.extname(file.name);
   req.body.fileType = fileType;
   req.body.isImage = isImage(fileType);
+  req.body.isVisible = true;
 
   // Save file locally
   let filePathWithNameWithType = 'public/' + fileId + fileType;
-  file.mv(filePathWithNameWithType, function(err) {
+  file.mv(filePathWithNameWithType, function (err) {
     if (err) {
       console.log(err)
     } else {
       // Upload file to s3
       let bucketName = req.app.locals.bootstrapConfigs.S3_CONTENT_BUCKET_NAME;
       let fileStream = fs.createReadStream(filePathWithNameWithType);
-      fileStream.on('error', function(err) {
+      fileStream.on('error', function (err) {
         console.log('File Error', err);
       });
 
@@ -103,17 +104,17 @@ router.post('/', jsonParser, function (req, res) {
         } else {
           /* On S3 upload success, insert metadata to DB */
           /* If one tag is sent, it will be as a String (not array)
-             So, create an array and add tag to array */
-          if (!Array.isArray(req.body.tags)) {
-              req.body.tags = [];
+             So, create an array and add the one tag */
+          if (req.body.tags != null && !Array.isArray(req.body.tags)) {
+            req.body.tags = [req.body.tags];
           }
           mongoUtil.getDb().collection(req.app.locals.bootstrapConfigs.CONTENT_COLLECTION_NAME).insertOne(req.body, function (err, res) {
-              if (err) throw err;
+            if (err) throw err;
           });
         }
         // delete local file on success and on failure
         fs.unlink(filePathWithNameWithType, (err) => {
-            if (err) throw err;
+          if (err) throw err;
         });
       });
     }
