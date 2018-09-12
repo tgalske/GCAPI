@@ -16,6 +16,8 @@ services:
       - "traefik.backend=gcapi"
       - "traefik.port=3000"
       - "traefik.protocol=http"
+    env_file:
+      - aws.env
 networks:
   web:
     external: true
